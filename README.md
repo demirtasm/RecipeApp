@@ -1,7 +1,6 @@
 # 🍽️ Recipe App
 
-An Android application to browse popular movies and view detailed movie information.
-
+An Android application to explore various recipe categories, view a list of recipes, and see detailed information about each recipe.
 ## 🚀 Technologies
 
 - **Language**: Kotlin
