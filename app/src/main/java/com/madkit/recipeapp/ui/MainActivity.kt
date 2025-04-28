@@ -1,11 +1,8 @@
 package com.madkit.recipeapp.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.madkit.recipeapp.R
-import com.madkit.recipeapp.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,11 +14,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val navController = findNavController(R.id.navHostFragment)
         setupActionBarWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.categoryGridFragment -> {
+                    supportActionBar?.title = "Recipe Categories"
+                }
+            } }
+
 
     }
     override fun onSupportNavigateUp(): Boolean {

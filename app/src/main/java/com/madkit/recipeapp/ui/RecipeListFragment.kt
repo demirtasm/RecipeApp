@@ -1,16 +1,14 @@
 package com.madkit.recipeapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.madkit.recipeapp.R
 import com.madkit.recipeapp.adapter.RecipeListAdapter
 import com.madkit.recipeapp.databinding.FragmentRecipeListBinding
 import com.madkit.recipeapp.viewmodel.RecipeViewModel
@@ -41,10 +39,17 @@ class RecipeListFragment : Fragment() {
 
         binding.recyclerViewRecipeList.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerViewRecipeList.adapter = recipeAdapter
-
-        viewModel.getRecipe(selectedCategory)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = selectedCategory
+            viewModel.getRecipe(selectedCategory)
         viewModel.recipeResponse.observe(viewLifecycleOwner) { categoriesResponse ->
             recipeAdapter.submitList(categoriesResponse.results)
+        }
+        recipeAdapter.setOnItemClickListener{
+            val direction =
+                RecipeListFragmentDirections.actionRecipeListFragmentToRecipeDetailFragment(
+                    it.id
+                )
+            findNavController().navigate(direction)
         }
 
     }

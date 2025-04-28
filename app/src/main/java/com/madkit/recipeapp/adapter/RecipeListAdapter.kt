@@ -9,8 +9,9 @@ import com.madkit.recipeapp.models.CategoriesResponse
 import com.squareup.picasso.Picasso
 import androidx.recyclerview.widget.ListAdapter
 
-class RecipeListAdapter : ListAdapter<CategoriesResponse.Result, RecipeListAdapter.RecipeListViewHolder>(DiffCallback) {
+class RecipeListAdapter() : ListAdapter<CategoriesResponse.Result, RecipeListAdapter.RecipeListViewHolder>(DiffCallback) {
 
+    private var onItemClickListener: ((CategoriesResponse.Result) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeListViewHolder {
         val binding = ItemRecipeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecipeListViewHolder(binding)
@@ -26,8 +27,15 @@ class RecipeListAdapter : ListAdapter<CategoriesResponse.Result, RecipeListAdapt
             binding.apply {
                 tvRecipeTitle.text = item.title
                 Picasso.get().load(item.image).into(imgRecipe)
+                root.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
             }
         }
+    }
+
+    fun setOnItemClickListener(listener: (CategoriesResponse.Result) -> Unit) {
+        onItemClickListener = listener
     }
 
     companion object {

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.madkit.recipeapp.R
@@ -40,12 +41,18 @@ class CategoryGridFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Recipe Categories"
+
+
         val adapter = CategoryGridAdapter(categories) { category ->
             navigateToCategory(category)
         }
+
         binding.recyclerViewCategoryGrid.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerViewCategoryGrid.adapter = adapter
     }
+
     private fun navigateToCategory(category: String) {
         val action =
             CategoryGridFragmentDirections.actionCategoryGridFragmentToRecipeListFragment(category)
