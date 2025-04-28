@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/categoryGridFragment">
+
+    <fragment
+        android:id="@+id/categoryGridFragment"
+        android:name="com.madkit.recipeapp.ui.CategoryGridFragment"
+        android:label="fragment_category_grid"
+        tools:layout="@layout/fragment_category_grid" >
+        <action
+            android:id="@+id/action_categoryGridFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="com.madkit.recipeapp.ui.RecipeListFragment"
+        android:label="fragment_recipe_list"
+        tools:layout="@layout/fragment_recipe_list" >
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+</navigation>

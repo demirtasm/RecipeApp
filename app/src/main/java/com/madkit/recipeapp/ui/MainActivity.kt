@@ -7,22 +7,25 @@ import androidx.appcompat.app.AppCompatActivity
 import com.madkit.recipeapp.R
 import com.madkit.recipeapp.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    val viewModel: RecipeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val selectedType = "dessert"
-        viewModel.getRecipe(selectedType)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
-        viewModel.recipeResponse.observe(this) { categoriesResponse ->
-           Log.e("TAGXX",""+categoriesResponse.results)
-        }
+        val navController = findNavController(R.id.navHostFragment)
+        setupActionBarWithNavController(navController)
+
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.navHostFragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
